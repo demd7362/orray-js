@@ -18,6 +18,9 @@ function similarity<T extends string | number>(left: Array<T>, right: Array<T>):
   return (total - sum) / total
 }
 
-console.log(similarity("ccccc".split(''), 'ccccdd'.split('')))
+export {
+  counter,
+  similarity
+}
 
 
