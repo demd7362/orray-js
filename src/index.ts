@@ -58,9 +58,22 @@ function combination(arr: string[], length: number) {
   return result
 }
 
+function groupBy <T, K extends string | number> (arr: T[], fun: (x: T) => K): Record<K, T[]>{
+  return arr.reduce((acc, val) => {
+    let key = fun(val)
+    acc[key] = acc[key] ?? []
+    acc[key].push(val)
+    return acc
+  }, {} as Record<K, T[]>)
+}
+
+
 export {
   counter,
-  similarity
+  similarity,
+  combination,
+  permutation,
+  groupBy
 }
 
 
