@@ -58,7 +58,7 @@ function combination(arr: string[], length: number) {
   return result
 }
 
-function groupBy <T, K extends string | number> (arr: T[], fun: (x: T) => K): Record<K, T[]>{
+function groupBy<T, K extends string | number>(arr: T[], fun: (x: T) => K): Record<K, T[]> {
   return arr.reduce((acc, val) => {
     let key = fun(val)
     acc[key] = acc[key] ?? []
@@ -67,13 +67,57 @@ function groupBy <T, K extends string | number> (arr: T[], fun: (x: T) => K): Re
   }, {} as Record<K, T[]>)
 }
 
+function countBy<T, K extends string | number>(arr: T[], fun: (x: T) => K): Record<K, number> {
+  return arr.reduce((acc, val) => {
+    let key = fun(val)
+    acc[key] = (acc[key] ?? 0) + 1
+    return acc
+  }, {} as Record<K, number>)
+}
+
+function uniqueBy<T>(arr: T[], fun: (x: T) => string | number): T[] {
+  const seen = new Set()
+  return arr.filter((item) => {
+    const key = fun(item)
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+}
+
+function partition<T>(arr: T[], predicate: (x: T) => boolean): [T[], T[]] {
+  return arr.reduce(
+    (acc, val) => {
+      if (predicate(val)) {
+        acc[0].push(val)
+      } else {
+        acc[1].push(val)
+      }
+      return acc
+    },
+    [[], []] as [T[], T[]]
+  )
+}
+
+function chunk<T>(arr: T[], size: number): T[][] {
+  return arr.reduce((acc, _, i) => {
+    if (i % size === 0) {
+      acc.push(arr.slice(i, i + size))
+    }
+    return acc
+  }, [] as T[][])
+}
 
 export {
   counter,
   similarity,
   combination,
   permutation,
-  groupBy
+  groupBy,
+  countBy,
+  uniqueBy,
+  partition,
+  chunk
 }
 
 
