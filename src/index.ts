@@ -14,8 +14,7 @@ function similarity<T extends string | number>(left: T[], right: T[]): number {
       counted[element]--
     }
   }
-  let sum = (Object.values(counted) as number[]).reduce((acc, val: number) => acc + val, 0)
-  return (total - sum) / total
+  return (total - sum(Object.values(counted))) / total
 }
 
 function permutation(arr: string[], length: number) {
@@ -61,7 +60,7 @@ function combination(arr: string[], length: number) {
 function groupBy<T, K extends string | number>(arr: T[], fun: (x: T) => K): Record<K, T[]> {
   return arr.reduce((acc, val) => {
     let key = fun(val)
-    acc[key] = acc[key] ?? []
+    acc[key] ??= []
     acc[key].push(val)
     return acc
   }, {} as Record<K, T[]>)
@@ -100,13 +99,37 @@ function partition<T>(arr: T[], predicate: (x: T) => boolean): [T[], T[]] {
 }
 
 function chunk<T>(arr: T[], size: number): T[][] {
-  return arr.reduce((acc, _, i) => {
-    if (i % size === 0) {
-      acc.push(arr.slice(i, i + size))
-    }
-    return acc
-  }, [] as T[][])
+  const result: T[][] = []
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size))
+  }
+  return result
 }
+
+function sum(arr: number[]) {
+  return arr.reduce((acc, val) => acc + val, 0)
+}
+
+function avg(arr: number[]) {
+  return sum(arr) / arr.length
+}
+
+function equalsIgnoreSequence<T extends string | number>(left: T[], right: T[]) {
+  if (left.length !== right.length) return false
+  return similarity(left, right) === 1
+}
+
+function equals<T extends string | number>(left: T[], right: T[]) {
+  if (left.length !== right.length) return false
+  for (let i = 0; i < left.length; i++) {
+    if (left[i] !== right[i]) {
+      return false
+    }
+  }
+  return true
+}
+
+
 
 export {
   counter,
