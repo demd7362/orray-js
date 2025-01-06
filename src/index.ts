@@ -133,28 +133,27 @@ function isPlainObject(arg: unknown): arg is Record<any, any> {
   return typeof arg === 'object' && arg !== null && !Array.isArray(arg)
 }
 
-function find<T>(obj: Record<any, any> | any[], target: T): T | null {
+function deepFind<T>(obj: Record<any, any> | any[], target: T): T | undefined {
   if (obj === target) {
     return target
   }
+
   if (Array.isArray(obj)) {
-    for (let element of obj) {
-      let result = find(element, target)
-      if (result !== null) {
+    for (const element of obj) {
+      const result = deepFind(element, target)
+      if (result !== undefined) {
         return result
       }
     }
   } else if (isPlainObject(obj)) {
-    for (let value of Object.values(obj)) {
-      let result = find(value, target)
-      if (result !== null) {
+    for (const value of Object.values(obj)) {
+      const result = deepFind(value, target)
+      if (result !== undefined) {
         return result
       }
     }
   }
-  return null
 }
-
 
 
 export {
@@ -166,7 +165,14 @@ export {
   countBy,
   uniqueBy,
   partition,
-  chunk
+  chunk,
+  sum,
+  avg,
+  equals,
+  equalsIgnoreSequence,
+  isPlainObject,
+  deepFind,
+
 }
 
 
