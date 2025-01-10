@@ -155,6 +155,13 @@ function deepFind<T>(obj: Record<any, any> | any[], target: T): T | undefined {
   }
 }
 
+function indexByValue<T extends string | number>(arr: T[]): Record<T, number> {
+  return arr.reduce((acc, val, index) => {
+    acc[val] ??= index
+    return acc
+  }, {} as Record<T, number>)
+}
+
 
 export {
   counter,
@@ -172,7 +179,7 @@ export {
   equalsIgnoreSequence,
   isPlainObject,
   deepFind,
-
+  indexByValue
 }
 
 
