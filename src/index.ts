@@ -191,9 +191,9 @@ function binarySearch<T>(arr: T[], target: T) {
   return -1
 }
 
-type ObjectHandler = ([k,v]: [string | number | symbol, any]) => string
+type ObjectHandler = ([k, v]: [string | number | symbol, any]) => string
 
-function flatten(arr: any[], depth: number, objectHandler?: ObjectHandler): any[] {
+function flatten(arr: any[], depth: number = Infinity, objectHandler?: ObjectHandler): any[] {
   let result: any[] = []
 
   const dfs = (arg: any, currentDepth: number) => {
@@ -238,7 +238,8 @@ export {
   deepFind,
   indexByValue,
   distinct,
-  binarySearch
+  binarySearch,
+  flatten
 }
 
 
