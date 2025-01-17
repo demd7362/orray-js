@@ -174,7 +174,7 @@ function distinct<T>(arr: T[]): T[] {
   return result
 }
 
-function binarySearch <T>(arr: T[], target:T) {
+function binarySearch<T>(arr: T[], target: T) {
   let left = 0
   let right = arr.length - 1
   while (left <= right) {
@@ -189,6 +189,34 @@ function binarySearch <T>(arr: T[], target:T) {
     }
   }
   return -1
+}
+
+type ObjectHandler = ([k,v]: [string | number | symbol, any]) => string
+
+function flatten(arr: any[], depth: number, objectHandler?: ObjectHandler): any[] {
+  let result: any[] = []
+
+  const dfs = (arg: any, currentDepth: number) => {
+    if (currentDepth > depth) {
+      result.push(arg)
+      return
+    }
+
+    if (Array.isArray(arg)) {
+      for (let element of arg) {
+        dfs(element, currentDepth + 1)
+      }
+    } else if (typeof arg === 'object' && arg !== null) {
+      for (let entry of Object.entries(arg)) {
+        dfs(objectHandler?.(entry) ?? entry, currentDepth + 1)
+      }
+    } else {
+      result.push(arg)
+    }
+  }
+
+  dfs(arr, 0)
+  return result
 }
 
 
