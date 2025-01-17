@@ -162,6 +162,35 @@ function indexByValue<T extends string | number>(arr: T[]): Record<T, number> {
   }, {} as Record<T, number>)
 }
 
+function distinct<T>(arr: T[]): T[] {
+  let result: T[] = []
+  let set = new Set()
+  for (let element of arr) {
+    if (!set.has(element)) {
+      set.add(element)
+      result.push(element)
+    }
+  }
+  return result
+}
+
+function binarySearch <T>(arr: T[], target:T) {
+  let left = 0
+  let right = arr.length - 1
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2)
+    if (arr[mid] === target) {
+      return mid
+    }
+    if (arr[mid] < target) {
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
+  return -1
+}
+
 
 export {
   counter,
@@ -179,7 +208,9 @@ export {
   equalsIgnoreSequence,
   isPlainObject,
   deepFind,
-  indexByValue
+  indexByValue,
+  distinct,
+  binarySearch
 }
 
 
