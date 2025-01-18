@@ -57,27 +57,27 @@ function combination(arr: string[], length: number) {
   return result
 }
 
-function groupBy<T, K extends string | number>(arr: T[], fun: (x: T) => K): Record<K, T[]> {
+function groupBy<T, K extends string | number>(arr: T[], keyFn: (x: T) => K): Record<K, T[]> {
   return arr.reduce((acc, val) => {
-    let key = fun(val)
+    let key = keyFn(val)
     acc[key] ??= []
     acc[key].push(val)
     return acc
   }, {} as Record<K, T[]>)
 }
 
-function countBy<T, K extends string | number>(arr: T[], fun: (x: T) => K): Record<K, number> {
+function countBy<T, K extends string | number>(arr: T[], keyFn: (x: T) => K): Record<K, number> {
   return arr.reduce((acc, val) => {
-    let key = fun(val)
+    let key = keyFn(val)
     acc[key] = (acc[key] ?? 0) + 1
     return acc
   }, {} as Record<K, number>)
 }
 
-function uniqueBy<T>(arr: T[], fun: (x: T) => string | number): T[] {
+function uniqueBy<T>(arr: T[], keyFn: (x: T) => string | number): T[] {
   const seen = new Set()
   return arr.filter((item) => {
-    const key = fun(item)
+    const key = keyFn(item)
     if (seen.has(key)) return false
     seen.add(key)
     return true
@@ -191,9 +191,8 @@ function binarySearch<T>(arr: T[], target: T) {
   return -1
 }
 
-type ObjectHandler = ([k, v]: [string | number | symbol, any]) => string
 
-function flatten(arr: any[], depth: number = Infinity, objectHandler?: ObjectHandler): any[] {
+function flatten(arr: any[], depth: number = Infinity, objectHandler?: ([k, v]: [string | number | symbol, any]) => string): any[] {
   let result: any[] = []
 
   const dfs = (arg: any, currentDepth: number) => {
