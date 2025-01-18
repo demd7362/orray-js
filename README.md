@@ -1,4 +1,4 @@
-# TypeScript Utility Library
+# JavaScript Utility Library
 
 A lightweight, type-safe utility library providing common array and object manipulation functions.
 
@@ -76,7 +76,7 @@ Splits array into two arrays based on predicate.
 #### `chunk<T>(arr: T[], size: number): T[][]`
 Splits array into chunks of specified size.
 
-#### `flatten(arr: any[], depth?: number, objectHandler?: ObjectHandler): any[]`
+#### `flatten(arr: any[], depth?: number, objectHandler?: ([k, v]: [string | number | symbol, any]) => string): any[]`
 Flattens nested arrays and objects to specified depth.
 
 ### Mathematical Operations
