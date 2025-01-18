@@ -59,13 +59,13 @@ Generates all possible permutations of given length.
 
 ### Collection Utilities
 
-#### `groupBy<T, K>(arr: T[], fun: (x: T) => K): Record<K, T[]>`
+#### `groupBy<T, K>(arr: T[], keyFn: (x: T) => K): Record<K, T[]>`
 Groups array elements by key function result.
 
-#### `countBy<T, K>(arr: T[], fun: (x: T) => K): Record<K, number>`
+#### `countBy<T, K>(arr: T[], keyFn: (x: T) => K): Record<K, number>`
 Counts elements by key function result.
 
-#### `uniqueBy<T>(arr: T[], fun: (x: T) => string | number): T[]`
+#### `uniqueBy<T>(arr: T[], keyFn: (x: T) => string | number): T[]`
 Removes duplicates based on key function.
 
 #### `partition<T>(arr: T[], predicate: (x: T) => boolean): [T[], T[]]`
